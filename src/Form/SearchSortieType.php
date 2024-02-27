@@ -18,8 +18,10 @@ class SearchSortieType extends AbstractType
         $builder
             ->add('campus_id', TextType::class,
             ['label' => 'Campus : '])
+            ->add('search', TextType::class,
+            ['label' => 'Le nom de la sortie contient : '])
             ->add('startDate', DateType::class,
-            ['label' => 'Enter le : '])
+            ['label' => 'Entre le : '])
             ->add('endDate', DateType::class,
             ['label' => 'Et le : '])
             ->add('organizer', CheckboxType::class,
@@ -28,7 +30,8 @@ class SearchSortieType extends AbstractType
             ['label' => 'Sortie auxquelles je suis inscrit/e'])
             ->add('notRegistered', CheckboxType::class,
             ['label' => 'Sortie auxquelles je ne suis pas inscrit/e'])
-            ->add('pastEvents', CheckboxType::class)
+            ->add('pastEvents', CheckboxType::class,
+            ['label' => 'Sortie passées'])
             ->add('submit', SubmitType::class, ['label' => 'Recherche'])
             ->getForm();
         ;

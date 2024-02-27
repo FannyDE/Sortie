@@ -16,7 +16,6 @@ class HomeController extends AbstractController
     public function index():Response
     {
         $user = $this->getUser();
-        $sortie = new Sortie();
         $searchForm = $this->createForm(SearchSortieType::class);
         return $this->render('home/index.html.twig', [
             'user'=>$user,
