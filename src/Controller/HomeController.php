@@ -20,4 +20,25 @@ class HomeController extends AbstractController
     {
 
     }
+
+    public function campus(): Response
+    {
+        $user = $this->getUser();
+
+        $isAdmin = $this->isGranted('ROLE_ADMIN');
+
+
+        $campusList = [];
+        if ($isAdmin) {
+
+            $campusList = $this->getDoctrine()->getRepository(Campus::class)->findAll();
+        }
+
+
+        return $this->render('home/index.html.twig', [
+            'isAdmin' => $isAdmin,
+            'campusList' => $campusList
+        ]);
+    }
+
 }

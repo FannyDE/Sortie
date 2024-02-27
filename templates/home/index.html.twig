@@ -4,11 +4,23 @@
 
  {% block body %}
   <section>
-   <div>{{ "now"|date("Y-m-d") }} </div>
-   {{ "Participant : " }}
+    <div>{{ "now"|date("Y-m-d") }} </div>
+    <h2>Participant :  {{ user.prenom }} {{ user.nom }} </h2>
+  </section>
 
+     <section>
 
- </section>
+         {% if isAdmin %}
+             <select name="campus">
+                 {% for campus in campusList %}
+                     <option value="{{ campus.id }}">{{ campus.nom }}</option>
+                 {% endfor %}
+             </select>
+         {% else %}
+             <p>Campus: {{ user.campus.nom }}</p>
+         {% endif %}
+
+     </section>
 
   <a href={{ path('sortie_create') }} class="button">Créer une activité</a>
 
