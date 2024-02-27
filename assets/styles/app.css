@@ -106,3 +106,9 @@ main {
 .cancel:hover {
     background-color: rgb(210, 130, 130);
 }
+
+input[readonly="readonly"] {
+    background-color: lightgray;
+    border: 0px;
+    padding-top: 0px;
+}
