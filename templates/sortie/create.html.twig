@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}{% endblock %}
+{% block title %}{{ parent() }} | Nouvelle sortie{% endblock %}
 
 {% block body %}
 
@@ -10,39 +10,46 @@
             <h3>Créer une sortie</h3>
         </div>
         <div class="formulaire_sortie">
-            <div class="left_column">   
-                {{ form_start(sortieForm) }}
-                {{ form_label(sortieForm.nom) }}
-                {{ form_widget(sortieForm.nom) }}
-                <br>
-                {{ form_label(sortieForm.dateHeureDebut) }}
-                {{ form_widget(sortieForm.dateHeureDebut) }}
-                <br>
-                {{ form_label(sortieForm.dateLimiteInscription) }}
-                {{ form_widget(sortieForm.dateLimiteInscription) }}
-                <br>
-                {{ form_label(sortieForm.nbInscriptionMax) }}
-                {{ form_widget(sortieForm.nbInscriptionMax) }}
-                <br>
-                {{ form_label(sortieForm.duree) }}
-                {{ form_widget(sortieForm.duree) }}
-                <span>minutes</span>
-                <br>
-                {{ form_label(sortieForm.infosSortie) }}
-                {{ form_widget(sortieForm.infosSortie) }}
-                {{ form_end(sortieForm) }}
-            </div>
+            {{ form_start(sortieForm) }}
+            <div class="form_sortie_main">
+                <div class="left_column">   
+                    {{ form_row(sortieForm.nom) }}
+                    <br>
+                    {{ form_row(sortieForm.dateHeureDebut) }}
+                    <br>
+                    {{ form_row(sortieForm.dateLimiteInscription) }}
+                    <br>
+                    {{ form_row(sortieForm.nbInscriptionMax) }}
+                    <br>
+                    {{ form_row(sortieForm.duree) }}minutes
+                    <br>
+                    {{ form_row(sortieForm.infosSortie) }}
+                </div>
 
-            <div class="right_column">   
-                <div>Campus</div>
-                <div>Ville</div>
-                <div>Lieu</div>
-                <div>Rue</div>
-                <div>Code postal</div>
-                <div>Latitude</div>
-                <div>Longitude</div>
+                <div class="right_column">   
+                    {{ form_row(sortieForm.campus) }}
+                    <br>
+                    <p>Ville : Menu déroulant des villes disponibles dans la BDD</p>
+                    <br>
+                    {{ form_row(sortieForm.lieu) }}
+                    <br>
+                    <p>Rue : Afficher rue du lieu</p>
+                    <br>
+                    <p>Code postal : Afficher code postal de la ville</p>
+                    <br>
+                    <p>Latitude : Afficher latitude du lieu</p>
+                    <br>
+                    <p>Longitude : Afficher longitude du lieu</p>
+                </div>
             </div>
+            <div class="partie_boutons">
+                <button class="save">Enregistrer</button>
+                <button class="publish">Publier la sortie</button>
+                <button class="cancel">Annuler</button>
+            </div>
+            {{ form_end(sortieForm) }}
         </div>
+
         
     </div>
 
