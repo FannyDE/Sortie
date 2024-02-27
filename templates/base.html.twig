@@ -12,15 +12,18 @@
         {% endblock %}
     </head>
     <body>
-        <h1>Accueil</h1>
+        <header>
+            {% include("/inc/_nav.html.twig") %}
+        </header>
 
-        {% include("/inc/_nav.html.twig") %}
-
+        <main>
         {% block body %}
 
         {% endblock %}
-    </body>
-    <footer>
+        </main>
 
-    </footer>
+        <footer>
+        
+        </footer>
+    </body>
 </html>

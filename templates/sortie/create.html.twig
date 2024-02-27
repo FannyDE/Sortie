@@ -3,8 +3,47 @@
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block body %}
-    <h3>Créer une sortie</h3>
 
-    {{ form_start(sortieForm) }}
-    {{ form_end(sortieForm) }}
+    <div class="main_body">
+
+        <div class="formulaire_titre">
+            <h3>Créer une sortie</h3>
+        </div>
+        <div class="formulaire_sortie">
+            <div class="left_column">   
+                {{ form_start(sortieForm) }}
+                {{ form_label(sortieForm.nom) }}
+                {{ form_widget(sortieForm.nom) }}
+                <br>
+                {{ form_label(sortieForm.dateHeureDebut) }}
+                {{ form_widget(sortieForm.dateHeureDebut) }}
+                <br>
+                {{ form_label(sortieForm.dateLimiteInscription) }}
+                {{ form_widget(sortieForm.dateLimiteInscription) }}
+                <br>
+                {{ form_label(sortieForm.nbInscriptionMax) }}
+                {{ form_widget(sortieForm.nbInscriptionMax) }}
+                <br>
+                {{ form_label(sortieForm.duree) }}
+                {{ form_widget(sortieForm.duree) }}
+                <span>minutes</span>
+                <br>
+                {{ form_label(sortieForm.infosSortie) }}
+                {{ form_widget(sortieForm.infosSortie) }}
+                {{ form_end(sortieForm) }}
+            </div>
+
+            <div class="right_column">   
+                <div>Campus</div>
+                <div>Ville</div>
+                <div>Lieu</div>
+                <div>Rue</div>
+                <div>Code postal</div>
+                <div>Latitude</div>
+                <div>Longitude</div>
+            </div>
+        </div>
+        
+    </div>
+
 {% endblock %}
