@@ -3,24 +3,26 @@
 {% block body %}
     <h1>Mon profil</h1>
 
-    {{ form_errors(registrationForm) }}
+    {{ form_errors(editForm) }}
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.tel) }}
-    {{ form_row(registrationForm.plainPassword, {
+    {{ form_start(editForm) }}
+
+    {{ form_row(editForm.email) }}
+    {{ form_row(editForm.pseudo) }}
+    {{ form_row(editForm.nom) }}
+    {{ form_row(editForm.prenom) }}
+    {{ form_row(editForm.tel) }}
+    {{ form_row(editForm.plainPassword, {
         label: 'Password'
     }) }}
-    {{ form_row(registrationForm.confirmPassword, {
+    {{ form_row(editForm.confirmPassword, {
         label: 'Password'
     }) }}
 
     <button type="submit" class="btn">Enregistrer</button>
     <button onclick="window.location.href='{{ path('home') }}'" class="btn">Retour</button>
 
-    {{ form_end(registrationForm) }}
+    {{ form_end(editForm) }}
 {% endblock %}
 
 {% block title %}

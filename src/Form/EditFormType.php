@@ -20,6 +20,7 @@ class EditFormType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('pseudo', TextType::class)
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('tel', TextType::class)
@@ -39,6 +40,7 @@ class EditFormType extends AbstractType
                 ],
             ])
             ->add('confirmPassword', PasswordType::class, [
+                'mapped' => false,
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 6]),
