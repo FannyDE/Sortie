@@ -13,9 +13,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route("/home", name: "home")]
-    public function index()
+    public function index():Response
     {
-        $user = new User();
+        $user = $this->getUser();
         $sortie = new Sortie();
         $searchForm = $this->createForm(SearchSortieType::class);
         return $this->render('home/index.html.twig', [
