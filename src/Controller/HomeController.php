@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Entity\User;
+use App\Form\SearchSortieType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,12 +15,21 @@ class HomeController extends AbstractController
     #[Route("/home", name: "home")]
     public function index()
     {
-        return $this->render('home/index.html.twig');
+        $user = new User();
+        $sortie = new Sortie();
+        $searchForm = $this->createForm(SearchSortieType::class);
+        return $this->render('home/index.html.twig', [
+            'user'=>$user,
+            "searchForm" => $searchForm->createView()
+        ]);
     }
 
     public function search(): Response
     {
 
+        return $this->render("home/index.html.twig", [
+
+        ]);
     }
 
     public function campus(): Response

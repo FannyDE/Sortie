@@ -5,12 +5,12 @@
  {% block body %}
   <section>
     <div>{{ "now"|date("Y-m-d") }} </div>
-    <h2>Participant :  {{ user.prenom }} {{ user.nom }} </h2>
+    <h2>Participant :  {{ user.prenom}} {{ user.prenom}} </h2>
   </section>
 
      <section>
 
-         {% if isAdmin %}
+         {#  {% if isAdmin %}
              <select name="campus">
                  {% for campus in campusList %}
                      <option value="{{ campus.id }}">{{ campus.nom }}</option>
@@ -18,7 +18,20 @@
              </select>
          {% else %}
              <p>Campus: {{ user.campus.nom }}</p>
-         {% endif %}
+         {% endif %}#}
+
+         {{ form_start(searchForm) }}
+
+         {{ form_row(searchForm.campus_id) }}
+         {#  {{ form_row(searchForm.search) }}
+         {{ form_row(searchForm.startDate) }}
+         {{ form_row(searchForm.endDate) }}
+         {{ form_row(searchForm.organizer) }}
+         {{ form_row(searchForm.registered) }}
+         {{ form_row(searchForm.notRegistered) }}
+         {{ form_row(searchForm.pastEvents) }}#}
+
+         {{ form_end(searchForm) }}
 
      </section>
 
