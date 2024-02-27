@@ -25,17 +25,24 @@ class SearchSortieType extends AbstractType
             ->add('endDate', DateType::class,
             ['label' => 'Et le : '])
             ->add('organizer', CheckboxType::class,
-            ['label' => 'Sortie dont je suis l\'organisateur/trice'])
+            ['label' => 'Sortie dont je suis l\'organisateur/trice',
+                'required' => false])
             ->add('registered', CheckboxType::class,
-            ['label' => 'Sortie auxquelles je suis inscrit/e'])
+            ['label' => 'Sortie auxquelles je suis inscrit/e',
+                'required' => false])
             ->add('notRegistered', CheckboxType::class,
-            ['label' => 'Sortie auxquelles je ne suis pas inscrit/e'])
+            ['label' => 'Sortie auxquelles je ne suis pas inscrit/e',
+                'required' => false])
             ->add('pastEvents', CheckboxType::class,
-            ['label' => 'Sortie passées'])
+            ['label' => 'Sortie passées',
+                'required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Recherche'])
             ->getForm();
         ;
+
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
