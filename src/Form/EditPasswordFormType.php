@@ -51,6 +51,7 @@ class EditPasswordFormType extends AbstractType
 
     public function validatePassword($value, ExecutionContextInterface $context): void
     {
+        dump('la methode est appelée');
         $form = $context->getRoot();
         $plainPassword = $form->get('plainPassword')->getData();
         $confirmPassword = $value;
@@ -60,6 +61,7 @@ class EditPasswordFormType extends AbstractType
             $context->buildViolation('Les mots de passe ne correspondent pas')
                 ->atPath('confirmPassword')
                 ->addViolation();
+
         }
     }
 }
