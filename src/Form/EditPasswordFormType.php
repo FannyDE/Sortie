@@ -55,6 +55,7 @@ class EditPasswordFormType extends AbstractType
         $plainPassword = $form->get('plainPassword')->getData();
         $confirmPassword = $value;
 
+
         if ($plainPassword !== $confirmPassword) {
             $context->buildViolation('Les mots de passe ne correspondent pas')
                 ->atPath('confirmPassword')
