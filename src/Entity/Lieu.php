@@ -6,6 +6,7 @@ use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -13,13 +14,18 @@ class Lieu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['liste_lieux'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['liste_lieux'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $rue = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $codePostal = null;
 
     #[ORM\Column]
     private ?float $latitude = null;
@@ -29,6 +35,11 @@ class Lieu
 
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'lieu')]
     private Collection $sorties;
+
+    #[ORM\ManyToOne(inversedBy: 'lieux')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['liste_lieux'])]
+    private ?Ville $ville = null;
 
     public function __construct()
     {
@@ -60,6 +71,18 @@ class Lieu
     public function setRue(string $rue): static
     {
         $this->rue = $rue;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -96,24 +119,36 @@ class Lieu
         return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): static
+    public function addSortie(Sortie $sortie): static
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
-            $sorty->setLieu($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setLieu($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): static
+    public function removeSortie(Sortie $sortie): static
     {
-        if ($this->sorties->removeElement($sorty)) {
+        if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getLieu() === $this) {
-                $sorty->setLieu(null);
+            if ($sortie->getLieu() === $this) {
+                $sortie->setLieu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }

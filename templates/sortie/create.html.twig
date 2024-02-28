@@ -29,13 +29,20 @@
                 <div class="right_column">   
                     {{ form_row(sortieForm.campus) }}
                     <br>
-                    <p>Ville : Menu déroulant des villes disponibles dans la BDD</p>
+                    {{ form_start(formVille) }}
+                        {{ form_row(formVille.nom) }}
+                    {{ form_end(formVille) }}
+
+                    {{ form_start(formLieu) }}
+                        {{ form_row(formLieu.nom) }}
+                    {{ form_end(formLieu) }}
+
                     <br>
-                    {{ form_row(sortieForm.lieu) }}
+                    <div id="infos_lieu"></div>
                     <br>
                     <p>Rue : Afficher rue du lieu</p>
                     <br>
-                    <p>Code postal : Afficher code postal de la ville</p>
+                    <p>Code postal : Afficher code postal de la ville du lieu</p>
                     <br>
                     <p>Latitude : Afficher latitude du lieu</p>
                     <br>
@@ -53,4 +60,8 @@
         
     </div>
 
+{% endblock %}
+
+{% block javascripts %} 
+    {{ parent() }}
 {% endblock %}

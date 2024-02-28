@@ -107,8 +107,17 @@ main {
     background-color: rgb(210, 130, 130);
 }
 
-input[readonly="readonly"] {
+select[readonly="readonly"] {
+    appearance: none;
     background-color: lightgray;
-    border: 0px;
-    padding-top: 0px;
+    border: 0;
+}
+
+.villes {
+    display: flex;
+    align-items: center;
+
+    select {
+        margin-left: 10px;
+    }
 }
