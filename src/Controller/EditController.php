@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditFormType;
+use App\Form\EditPasswordFormType;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,11 +32,10 @@ class EditController extends AbstractController
                 )
             );
 
-            $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
+            $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
@@ -46,6 +46,38 @@ class EditController extends AbstractController
 
         return $this->render('registration/edit.html.twig', [
             'editForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route("/editPassword", name: "editPassword")]
+    public function editPass(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditPasswordFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
+            return $this->redirectToRoute('home');
+        }
+
+
+        return $this->render('registration/editPW.html.twig', [
+            'editPWForm' => $form->createView(),
         ]);
     }
 }
