@@ -1,7 +1,10 @@
 window.onload = () => {
-    const villeSelect = document.querySelector('#ville_nom');
-    const lieuSelect = document.querySelector('#lieu_nom');
-    const infosLieu = document.querySelector('#infos_lieu');
+    const villeSelect = document.querySelector('#sortie_ville_nom');
+    const lieuSelect = document.querySelector('#sortie_lieu');
+    const rue = document.querySelector('#info_rue');
+    const cp = document.querySelector('#info_cp');
+    const latitude = document.querySelector('#info_latitude');
+    const longitude = document.querySelector('#info_longitude');
 
     villeSelect.addEventListener('change', function() {
         fetch(`/Sortie/public/lieux/${this.value}`, {
@@ -18,48 +21,17 @@ window.onload = () => {
                 });
             })
     })
-    .catch(e => {
-        alert('ERREUR')
-    })
 
-    lieuSelect.addEventListener('change', () => {
+    lieuSelect.addEventListener('change', function() {
         fetch(`/Sortie/public/lieu/${this.value}`, {
             method: 'GET',
-            headers: { 'Accept' : 'application-json'}
+            headers: { 'Accept' : 'application-json' }
         }).then(response => response.json())
             .then(data => {
-                infosLieu.innerHTML = '';
-                data.forEach(info => {
-                    const p = document.createElement('p');
-                    p.textContent = `Rue : ${info.rue}`;
-                    infosLieu.appendChild(p);
-                })
-            })
-    })
-    .catch(e => {
-        alert('ERREUR : problème chargement infos')
+                rue.innerHTML = data[0].rue;
+                cp.innerHTML = data[0].codePostal;
+                latitude.innerHTML = data[0].latitude;
+                longitude.innerHTML = data[0].longitude;
+            });
     })
 }
-
-
-/*
-let villeValue = null;
-    const villes = document.querySelector('#villes_list'); 
-    villes.addEventListener("change", () => {
-        fetch('http://localhost:8888/Sortie/public/sortie/api/lieux', {
-            method: "GET",
-            headers: { 'Accept': 'application-json' }
-        }).then(response => response.json())
-            .then(response => {
-                response.map(lieu => {
-                    options += `<option value="${lieu.id}">${lieu.nom} ${lieu.ville}</option>`
-                    console.log(response)
-                })
-                console.log(villeValue)
-                document.querySelector('#lieux').innerHTML = options;
-            })
-            .catch(e => {
-                alert('ERREUR')
-            })
-    }) 
-*/

@@ -256,12 +256,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-     #[ORM\ManyToOne(targetEntity:Campus::class, inversedBy: "participants")]
-     #[ORM\JoinColumn(nullable:false)]
-
+    #[ORM\ManyToOne(targetEntity:Campus::class, inversedBy: "participants")]
+    #[ORM\JoinColumn(nullable:false)]
     private Campus $campus;
 
-    // ...
 
     public function getCampus(): Campus
     {

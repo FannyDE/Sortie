@@ -29,30 +29,32 @@
                 <div class="right_column">   
                     {{ form_row(sortieForm.campus) }}
                     <br>
-                    {{ form_start(formVille) }}
-                        {{ form_row(formVille.nom) }}
-                    {{ form_end(formVille) }}
-
-                    {{ form_start(formLieu) }}
-                        {{ form_row(formLieu.nom) }}
-                    {{ form_end(formLieu) }}
-
+                    <span>Ville : </span><select name="sortie_ville_nom" id="sortie_ville_nom">
+                        <option value="">Sélectionner une ville</option>
+                        {% for ville in villes %}
+                            <option value="{{ville.id}}">{{ville.nom}}</option>
+                        {% endfor %}
+                    </select>
                     <br>
-                    <div id="infos_lieu"></div>
                     <br>
-                    <p>Rue : Afficher rue du lieu</p>
+                    {{ form_row(sortieForm.lieu) }}
                     <br>
-                    <p>Code postal : Afficher code postal de la ville du lieu</p>
+                    <span>Rue : </span><span id="info_rue"></span>
                     <br>
-                    <p>Latitude : Afficher latitude du lieu</p>
                     <br>
-                    <p>Longitude : Afficher longitude du lieu</p>
+                    <span>Code postal : </span><span id="info_cp"></span>
+                    <br>
+                    <br>
+                    <span>Latitude : </span><span id="info_latitude"></span>
+                    <br>
+                    <br>
+                    <span>Longitude : </span><span id="info_longitude"></span>
                 </div>
             </div>
             <div class="partie_boutons">
-                <button class="save">Enregistrer</button>
-                <button class="publish">Publier la sortie</button>
-                <button class="cancel">Annuler</button>
+                {{ form_row(sortieForm.enregistrer) }}
+                {{ form_row(sortieForm.publier) }}
+                {{ form_row(sortieForm.annuler) }}
             </div>
             {{ form_end(sortieForm) }}
         </div>
