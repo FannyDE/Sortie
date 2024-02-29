@@ -8,6 +8,8 @@ use App\Form\EditPasswordFormType;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,12 +27,24 @@ class EditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            $profilePictureFile = $form->get('profilePicture')->getData();
+            if ($profilePictureFile instanceof UploadedFile) {
+                $newFilename = uniqid() . '.' . $profilePictureFile->guessExtension();
+                try {
+                    $profilePictureFile->move(
+                        $this->getParameter('profile_picture_directory'),
+                        $newFilename
+                    );
+
+                    // Mettez à jour le chemin de la photo de profil dans l'entité User
+                    $user->setProfilePicture($newFilename);
+                } catch (FileException $e) {
+                    // Gérer les erreurs de téléchargement ici, si nécessaire
+                }
+            } else {
+                // Si aucun nouveau fichier n'a été téléchargé, conservez le nom de fichier actuel
+                $newFilename = $user->getProfilePicture();
+            }
 
             $entityManager->flush();
             // do anything else you need here, like send an email
