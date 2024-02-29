@@ -21,11 +21,12 @@ class Campus
 
     #[ORM\OneToMany(targetEntity:User::class, mappedBy:'campus')]
 
-    private $participants;
+    private Collection $participants;
 
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     /**
@@ -61,10 +62,6 @@ class Campus
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'campus')]
     private Collection $sorties;
 
-    public function __construct()
-    {
-        $this->sorties = new ArrayCollection();
-    }
 
     public function __toString()
     {
