@@ -238,4 +238,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+     #[ORM\ManyToOne(targetEntity:Campus::class)]
+     #[ORM\JoinColumn(nullable:false)]
+
+    private $campus;
+
+    // ...
+
+    public function getCampus(): Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
 }

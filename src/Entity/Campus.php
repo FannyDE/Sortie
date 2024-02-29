@@ -18,6 +18,46 @@ class Campus
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+
+    #[ORM\OneToMany(targetEntity:User::class, mappedBy:'campus')]
+
+    private $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addUser(User $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setCampus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // Définissez le côté propriétaire sur null (sauf si déjà défini)
+            if ($participant->getCampus() === $this) {
+                $participant->setCampus(null);
+            }
+        }
+
+        return $this;
+    }
+
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'campus')]
     private Collection $sorties;
 

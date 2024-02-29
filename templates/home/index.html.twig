@@ -10,28 +10,29 @@
 
      <section>
 
-         {#  {% if isAdmin %}
-             <select name="campus">
-                 {% for campus in campusList %}
-                     <option value="{{ campus.id }}">{{ campus.nom }}</option>
-                 {% endfor %}
-             </select>
-         {% else %}
-             <p>Campus: {{ user.campus.nom }}</p>
-         {% endif %}#}
 
-         {{ form_start(searchForm) }}
+
+         <p>Campus: {{ resultats.campus }}</p>
+         <p>Recherche: {{ resultats.search }}</p>
+         <p>Date de début: {{ resultats.startDate|date('Y-m-d') }}</p>
+         <p>Date de fin: {{ resultats.endDate|date('Y-m-d') }}</p>
+         <p>Organisateur: {{ resultats.organizer ? 'Oui' : 'Non' }}</p>
+         <p>Inscrit: {{ resultats.registered ? 'Oui' : 'Non' }}</p>
+         <p>Non inscrit: {{ resultats.notRegistered ? 'Oui' : 'Non' }}</p>
+         <p>Événements passés: {{ resultats.pastEvent ? 'Oui' : 'Non' }}</p>
+
+        {# {{ form_start(searchForm) }}
 
          {{ form_row(searchForm.campus_id) }}
-         {#  {{ form_row(searchForm.search) }}
+         {{ form_row(searchForm.search) }}
          {{ form_row(searchForm.startDate) }}
          {{ form_row(searchForm.endDate) }}
          {{ form_row(searchForm.organizer) }}
          {{ form_row(searchForm.registered) }}
          {{ form_row(searchForm.notRegistered) }}
-         {{ form_row(searchForm.pastEvents) }}#}
+         {{ form_row(searchForm.pastEvents) }}
 
-         {{ form_end(searchForm) }}
+         {{ form_end(searchForm) }}#}
 
      </section>
 
