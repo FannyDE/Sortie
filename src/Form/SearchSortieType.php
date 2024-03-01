@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\DTO\SearchDTO;
+use App\Entity\Campus;
 use App\Entity\Sortie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,8 +19,11 @@ class SearchSortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('campus_id', TextType::class,
-            ['label' => 'Campus : '])
+            ->add('campus_id', ChoiceType::class, [
+                'choices' => array_combine($options['campus']->getCampus(), $options['campus']->getCampus()),
+            'label' => 'Campus : ',
+            'required' => true
+        ])
             ->add('search', TextType::class,
             ['label' => 'Le nom de la sortie contient : '])
             ->add('startDate', DateType::class,
@@ -49,7 +54,10 @@ class SearchSortieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SearchDTO::class,
+            'campus' => null
 
         ]);
+
+        $resolver->setAllowedTypes('campus', [Campus::class]);
     }
 }

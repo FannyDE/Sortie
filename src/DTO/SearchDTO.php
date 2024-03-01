@@ -2,21 +2,22 @@
 
 namespace App\DTO;
 
+use App\Entity\Campus;
 use DateTime;
 use PhpParser\Node\Scalar\String_;
 
 class SearchDTO
 {
-    private $campus;
-    private $search;
-    private $startDate;
-    private $endDate;
-    private $organizer;
-    private $registered;
-    private $notRegistered;
-    private $pastEvent;
+    private Campus $campus;
+    private string $search;
+    private DateTime $startDate;
+    private DateTime $endDate;
+    private bool $organizer;
+    private bool $registered;
+    private bool $notRegistered;
+    private bool $pastEvent;
 
-    public function __construct(string $campus, string $search, DateTime $startDate, Datetime $endDate, bool $organizer, bool $registered, bool $notRegistered, bool $pastEvent)
+    public function __construct($campus, $search, $startDate, $endDate, $organizer, $registered, $notRegistered, $pastEvent)
     {
         $this->campus = $campus;
         $this->search = $search;
@@ -28,7 +29,7 @@ class SearchDTO
         $this->pastEvent = $pastEvent;
     }
 
-    public function getCampus(): string
+    public function getCampus(): Campus
     {
         return $this->campus;
     }
@@ -66,5 +67,12 @@ class SearchDTO
     public function getPastEvent(): bool
     {
         return $this->pastEvent;
+    }
+
+    public function setCampus(Campus $campus): SearchDTO
+    {
+        $this->campus = $campus;
+
+        return $this;
     }
 }

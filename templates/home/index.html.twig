@@ -10,6 +10,18 @@
 
      <section>
 
+         {{ form_start(searchForm) }}
+         {{ form_row(searchForm.campus_id) }}
+         {{ form_row(searchForm.search) }}
+         {{ form_row(searchForm.startDate) }}
+         {{ form_row(searchForm.endDate) }}
+         {{ form_row(searchForm.organizer) }}
+         {{ form_row(searchForm.registered) }}
+         {{ form_row(searchForm.notRegistered) }}
+         {{ form_row(searchForm.pastEvents) }}
+         <button type="submit">Recherche</button>
+         {{ form_end(searchForm) }}
+
 
 
          <p>Campus: {{ resultats.campus }}</p>

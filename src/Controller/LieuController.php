@@ -32,10 +32,10 @@ class LieuController extends AbstractController
 
 
     #[Route('/lieu/{lieuId}', name: 'infos_lieu', methods: ['GET'])]
-    public function infosLieu(Request $request, LieuRepository $lieuRepository): JsonResponse
+    public function infosLieu(Lieu $lieu, Request $request, LieuRepository $lieuRepository): JsonResponse
     {
-        $lieuId = $request->get('lieuId');
-        $lieu = $lieuRepository->find($lieuId);
+        //$lieuId = $request->get('lieuId');
+        //$lieu = $lieuRepository->find($lieuId);
         $data[] = [
             'rue' => $lieu->getRue(),
             'codePostal' => $lieu->getCodePostal(),
