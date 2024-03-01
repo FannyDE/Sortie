@@ -46,7 +46,7 @@ class HomeController extends AbstractController
                 $searchDTO -> setCampus ( $campusList );
                 $defaultCampus = null;
 
-                } else if (!$isAdmin && $user instanceof User) {
+                } elseif (!$isAdmin && $user instanceof User) {
                 $defaultCampusId = $user -> getIdCampus ();
 
                 $defaultCampus = $this -> getDoctrine () -> getRepository ( Campus::class ) -> find ( $defaultCampusId );
