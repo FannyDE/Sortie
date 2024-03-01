@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/profile.css') }}">
+{% endblock %}
 {% block body %}
     <h1>Mon profil</h1>
 
@@ -17,11 +19,12 @@
     {{ form_row(editForm.prenom) }}
     {{ form_row(editForm.tel) }}
 
-
-    <button type="submit" class="btn">Enregistrer</button>
-    <button><a href="{{ path('editPassword') }}">Modifier le mot de passe</a></button>
-    <button onclick="window.location.href='{{ path('home') }}'" class="btn">Retour</button>
-
+    <div></div>
+    <section >
+        <button type="submit" class="btn">Enregistrer</button>
+        <button><a href="{{ path('editPassword') }}">Modifier le mot de passe</a></button>
+        <button onclick="window.location.href='{{ path('home') }}'" class="btn">Retour</button>
+    </section>
     {{ form_end(editForm) }}
 {% endblock %}
 

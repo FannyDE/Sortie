@@ -1,0 +1,42 @@
+img {
+    width: 150px;
+    height: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-class {
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    margin-top: 10px;
+}
+
+section{
+    margin-top: 10px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+        cursor:pointer;
+        color: purple;
+    }
+
+}
+
+button{
+    &:hover {
+        cursor:pointer;
+        color: purple;
+    }
+}
+
+
+

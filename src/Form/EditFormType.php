@@ -16,10 +16,10 @@ class EditFormType extends AbstractType
         $builder
             ->add('profilePicture', FileType::class, ['label' => 'Photo de profil', 'mapped' =>false, 'required' => false])
             ->add('email')
-            ->add('pseudo', TextType::class, ['required' => false])
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('tel', TextType::class)
+            ->add('pseudo', TextType::class, ['required' => false, 'attr' => ['class' => 'custom-class']])
+            ->add('nom', TextType::class, ['attr' => ['class' => 'custom-class']])
+            ->add('prenom', TextType::class, ['attr' => ['class' => 'custom-class']])
+            ->add('tel', TextType::class, ['attr' => ['class' => 'custom-class']])
         ;
     }
 
