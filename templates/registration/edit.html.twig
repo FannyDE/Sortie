@@ -5,12 +5,12 @@
 
     {{ form_errors(editForm) }}
 
-   {{ form_start(editForm) }}
+   {{ form_start(editForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
 
     {{ form_row(editForm.profilePicture) }}
-      {% if user.profilePicture %}
+     {#  {% if user.profilePicture %}
         <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="Photo de profil">
-    {% endif %}}
+    {% endif %}}#}
     {{ form_row(editForm.email) }}
     {{ form_row(editForm.pseudo) }}
     {{ form_row(editForm.nom) }}

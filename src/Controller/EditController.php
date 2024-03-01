@@ -60,6 +60,7 @@ class EditController extends AbstractController
 
         return $this->render('registration/edit.html.twig', [
             'editForm' => $form->createView(),
+            'user' => $this->getUser()
         ]);
     }
 

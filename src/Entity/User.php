@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?File $profilePicture = null;
+    private ?string $profilePicture = null;
 
 
     #[ORM\Column(nullable: true)]
@@ -72,14 +72,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getProfilePicture(): ?File
+    public function getProfilePicture(): ?string
     {
         return $this->profilePicture;
     }
 
-    public function setProfilePicture(?File $profilePicture): void
+    public function setProfilePicture(?string $profilePicture)
     {
         $this->profilePicture = $profilePicture;
+        return $this;
 
 
     }
@@ -256,21 +257,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-    #[ORM\ManyToOne(targetEntity:Campus::class, inversedBy: "participants")]
-    #[ORM\JoinColumn(nullable:false)]
-    private Campus $campus;
+     #[ORM\ManyToOne(targetEntity:Campus::class, inversedBy: "participants")]
+     #[ORM\JoinColumn(nullable:false)]
+     private Campus $campus;
 
 
-    public function getCampus(): Campus
-    {
-        return $this->campus;
-    }
+     public function getCampus(): Campus
+     {
+       return $this->campus;
+     }
 
-    public function setCampus(Campus $campus): self
-    {
-        $this->campus = $campus;
+     public function setCampus(Campus $campus): self
+     {
+       $this->campus = $campus;
 
-        return $this;
-    }
+       return $this;
+     }
 }
 
