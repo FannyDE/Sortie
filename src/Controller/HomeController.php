@@ -8,10 +8,14 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\SearchSortieType;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
+
 
 
 class HomeController extends AbstractController
@@ -26,11 +30,11 @@ class HomeController extends AbstractController
 
         $searchDTO = null;
 
-        if ($isAdmin && $user instanceof User) {
+        if ($isAdmin || $user instanceof User) {
             // Si l'utilisateur est un administrateur, récupérer la liste des campus
 
             if ($isAdmin) {
-                $campusList = $this -> getDoctrine () -> getRepository ( Campus::class ) -> findAllCampus();
+                $campusList = $this -> getDoctrine () -> getRepository ( Campus::class ) -> findAll();
                 $defaultCampus = !empty( $campusList ) ? $campusList[0] : null;
 
                 $searchDTO = new SearchDTO(
@@ -47,12 +51,12 @@ class HomeController extends AbstractController
                 $defaultCampus = null;
 
                 } elseif (!$isAdmin && $user instanceof User) {
-                $defaultCampusId = $user -> getIdCampus ();
+                $defaultCampusId = $user -> getCampus ();
 
                 $defaultCampus = $this -> getDoctrine () -> getRepository ( Campus::class ) -> find ( $defaultCampusId );
 
                 // Créer le formulaire de recherche de sortie
-                $searchForm = $this -> createForm ( SearchSortieType::class, null, ['campus' => $searchDTO ?? $defaultCampus] );
+                $searchForm = $this -> createForm ( SearchSortieType::class, null, ['campus_choices' => $this->formatCampusChoices($campusList)]);
 
                 $searchForm -> handleRequest ( $request );
 
@@ -138,4 +142,28 @@ class HomeController extends AbstractController
         } else {return $this -> redirectToRoute ( 'app_login');}
     }
 
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
+    // ...
+
+    private function getDoctrine(): ManagerRegistry
+    {
+        return $this->doctrine;
+    }
+
+    private function formatCampusChoices(array $campusList): array
+    {
+        $choices = [];
+        foreach ($campusList as $campus) {
+
+            $choices[$campus->getId()] = $campus->getNom();
+        }
+        return $choices;
+    }
 }
+

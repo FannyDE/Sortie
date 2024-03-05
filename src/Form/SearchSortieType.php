@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\DTO\SearchDTO;
 use App\Entity\Campus;
-use App\Entity\Sortie;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,8 +19,8 @@ class SearchSortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('campus_id', ChoiceType::class, [
-                'choices' => array_combine($options['campus']->getCampus(), $options['campus']->getCampus()),
+            ->add('campus', ChoiceType::class, [
+                'choices' => $options['campus_choices'],
             'label' => 'Campus : ',
             'required' => true
         ])
@@ -54,10 +54,10 @@ class SearchSortieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SearchDTO::class,
-            'campus' => null
+            'campus_choices' => [],
 
         ]);
 
-        $resolver->setAllowedTypes('campus', [Campus::class]);
+        $resolver->setAllowedTypes('campus_choices', 'array');
     }
 }

@@ -61,6 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
     private Collection $sortiesParticipees;
 
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
@@ -273,5 +274,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
        return $this;
      }
+
 }
 

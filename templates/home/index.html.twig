@@ -5,13 +5,13 @@
  {% block body %}
   <section>
     <div>{{ "now"|date("Y-m-d") }} </div>
-    <h2>Participant :  {{ user.prenom}} {{ user.nom}} </h2>
+    <h2>Participant :  {{ user.prenom }} {{ user.nom }} </h2>
   </section>
 
      <section>
 
          {{ form_start(searchForm) }}
-         {{ form_row(searchForm.campus_id) }}
+         {{ form_row(searchForm.campus) }}
          {{ form_row(searchForm.search) }}
          {{ form_row(searchForm.startDate) }}
          {{ form_row(searchForm.endDate) }}
@@ -19,32 +19,22 @@
          {{ form_row(searchForm.registered) }}
          {{ form_row(searchForm.notRegistered) }}
          {{ form_row(searchForm.pastEvents) }}
-         <button type="submit">Recherche</button>
          {{ form_end(searchForm) }}
 
 
 
-         <p>Campus: {{ resultats.campus }}</p>
-         <p>Recherche: {{ resultats.search }}</p>
-         <p>Date de début: {{ resultats.startDate|date('Y-m-d') }}</p>
-         <p>Date de fin: {{ resultats.endDate|date('Y-m-d') }}</p>
-         <p>Organisateur: {{ resultats.organizer ? 'Oui' : 'Non' }}</p>
-         <p>Inscrit: {{ resultats.registered ? 'Oui' : 'Non' }}</p>
-         <p>Non inscrit: {{ resultats.notRegistered ? 'Oui' : 'Non' }}</p>
-         <p>Événements passés: {{ resultats.pastEvent ? 'Oui' : 'Non' }}</p>
+         {% for sortie in resultats %}
+             <p>Campus: {{ sortie.campus_id }}</p>
+             <p>Recherche: {{ sortie.search }}</p>
+             <p>Date de début: {{ sortie.startDate|date('Y-m-d') }}</p>
+             <p>Date de fin: {{ sortie.endDate|date('Y-m-d') }}</p>
+             <p>Organisateur: {{ sortie.organizer ? 'Oui' : 'Non' }}</p>
+             <p>Inscrit: {{ sortie.registered ? 'Oui' : 'Non' }}</p>
+             <p>Non inscrit: {{ sortie.notRegistered ? 'Oui' : 'Non' }}</p>
+             <p>Événements passés: {{ sortie.pastEvent ? 'Oui' : 'Non' }}</p>
+         {% endfor %}
 
-        {# {{ form_start(searchForm) }}
 
-         {{ form_row(searchForm.campus_id) }}
-         {{ form_row(searchForm.search) }}
-         {{ form_row(searchForm.startDate) }}
-         {{ form_row(searchForm.endDate) }}
-         {{ form_row(searchForm.organizer) }}
-         {{ form_row(searchForm.registered) }}
-         {{ form_row(searchForm.notRegistered) }}
-         {{ form_row(searchForm.pastEvents) }}
-
-         {{ form_end(searchForm) }}#}
 
      </section>
 
