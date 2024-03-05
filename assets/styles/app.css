@@ -110,6 +110,7 @@ main {
 select[readonly="readonly"] {
     appearance: none;
     background-color: lightgray;
+    color: black;
     border: 0;
 }
 
@@ -121,3 +122,16 @@ select[readonly="readonly"] {
         margin-left: 10px;
     }
 }
+
+
+.flash {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    color: black;
+}
+
+.flash-success {background-color: rgb(105, 165, 45)}
+.flash-error {background-color: rgb(210, 67, 67)}

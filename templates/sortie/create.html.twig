@@ -29,15 +29,9 @@
                 <div class="right_column">   
                     {{ form_row(sortieForm.campus) }}
                     <br>
-                    <span>Ville : </span><select name="sortie_ville_nom" id="sortie_ville_nom">
-                        <option value="">Sélectionner une ville</option>
-                        {% for ville in villes %}
-                            <option value="{{ville.id}}">{{ville.nom}}</option>
-                        {% endfor %}
-                    </select>
+                    {{ form_row(sortieForm.ville) }}
                     <br>
-                    <br>
-                    {{ form_row(sortieForm.lieu) }}
+                    {{ form_row(sortieForm.lieu, {'id': 'sortie_lieu'}) }}
                     <br>
                     <span>Rue : </span><span id="info_rue"></span>
                     <br>
@@ -50,11 +44,12 @@
                     <br>
                     <span>Longitude : </span><span id="info_longitude"></span>
                 </div>
+                {{ form_row(sortieForm.etat, {'id': 'sortie_etat'}) }}  
             </div>
             <div class="partie_boutons">
-                {{ form_row(sortieForm.enregistrer) }}
-                {{ form_row(sortieForm.publier) }}
-                {{ form_row(sortieForm.annuler) }}
+                {{ form_row(sortieForm.enregistrer, {'id': 'sortie_enregistrer'}) }}
+                {{ form_row(sortieForm.publier, {'id': 'sortie_publier'}) }}
+                {{ form_row(sortieForm.annuler, {'id': 'sortie_annuler'}) }}
             </div>
             {{ form_end(sortieForm) }}
         </div>
