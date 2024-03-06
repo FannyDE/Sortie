@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Campus;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -20,16 +21,18 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('tel', TextType::class)
+            ->add('email',EmailType::class,['attr' => ['class' => 'custom-class']])
+            ->add('nom', TextType::class,['attr' => ['class' => 'custom-class']])
+            ->add('prenom', TextType::class,['attr' => ['class' => 'custom-class']])
+            ->add('tel', TextType::class,['attr' => ['class' => 'custom-class']])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
+                'attr' => ['class' => 'custom-class'],
                 'choice_label' => 'nom'
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                                'mapped' => false,
+                'mapped' => false,
+                'attr' => ['class' => 'custom-class'],
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -40,7 +43,7 @@ class RegistrationFormType extends AbstractType
                                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password','class' => 'custom-class'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
