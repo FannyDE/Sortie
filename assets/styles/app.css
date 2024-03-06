@@ -74,11 +74,37 @@ main {
     width: 400px;
 }
 
+.duree_container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.lieu_container {
+    display: flex;
+    gap: 10px;
+
+    a {
+        color: black;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+}
+
+
+.description_container div {
+    display: flex;
+}
+
 .partie_boutons {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 
-    button {
+    button, a {
         margin: 20px;
         padding: 8px 5px;
         color: white;
@@ -86,6 +112,7 @@ main {
         border-radius: 3px;
         border: 1px solid black;
         background-color: rgb(101, 101, 101);
+        text-decoration: none;
 
         &:hover {
             cursor: pointer;

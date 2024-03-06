@@ -21,9 +21,13 @@
                     <br>
                     {{ form_row(sortieForm.nbInscriptionMax) }}
                     <br>
-                    {{ form_row(sortieForm.duree) }}minutes
-                    <br>
-                    {{ form_row(sortieForm.infosSortie) }}
+                    <div class="duree_container">
+                        {{ form_row(sortieForm.duree) }} <span>minutes</span>
+                    </div>
+                    <br>        
+                    <div class="description_container">
+                        {{ form_row(sortieForm.infosSortie, {'attr': {'rows': 5}}) }}
+                    </div>
                 </div>
 
                 <div class="right_column">   
@@ -31,7 +35,10 @@
                     <br>
                     {{ form_row(sortieForm.ville) }}
                     <br>
-                    {{ form_row(sortieForm.lieu, {'id': 'sortie_lieu'}) }}
+                    <div class="lieu_container">
+                        {{ form_row(sortieForm.lieu, {'id': 'sortie_lieu'}) }}
+                        <a href="{{ path('lieu_create') }}"><span class="material-symbols-outlined">add_circle</span></a>
+                    </div>
                     <br>
                     <span>Rue : </span><span id="info_rue"></span>
                     <br>
@@ -49,7 +56,7 @@
             <div class="partie_boutons">
                 {{ form_row(sortieForm.enregistrer, {'id': 'sortie_enregistrer'}) }}
                 {{ form_row(sortieForm.publier, {'id': 'sortie_publier'}) }}
-                {{ form_row(sortieForm.annuler, {'id': 'sortie_annuler'}) }}
+                <a href="{{ path('home') }}" class='cancel'>Annuler</a>
             </div>
             {{ form_end(sortieForm) }}
         </div>
@@ -61,4 +68,8 @@
 
 {% block javascripts %} 
     {{ parent() }}
+{% endblock %}
+
+{% block javascripts2 %}
+    <script src="{{ asset('api/form.js') }}"></script>
 {% endblock %}
