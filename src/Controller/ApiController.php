@@ -24,8 +24,8 @@ class ApiController extends AbstractController
         
         return new JsonResponse($data);
     }
-
-    #[Route('/lieux/{villeId}', name: 'lieux_par_ville', methods: ['POST'])]
+// A corriger
+    #[Route('/lieux/{villeId}', name: 'lieux_par_ville', methods: ['GET','POST'])]
     public function lieuxParVille($villeId, LieuRepository $lr)
     {
         // Récupérer les lieux en fonction de l'ID de la ville

@@ -259,11 +259,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
      #[ORM\ManyToOne(targetEntity:Campus::class, inversedBy: "participants")]
+     #[ORM\JoinColumn(name:"campus_id", referencedColumnName:"id")]
      #[ORM\JoinColumn(nullable:false)]
      private Campus $campus;
 
 
-     public function getCampus(): Campus
+     public function getCampus(): ? Campus
      {
        return $this->campus;
      }
