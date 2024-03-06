@@ -24,14 +24,21 @@
 
 
          {% for sortie in resultats %}
-             <p>Campus: {{ sortie.campus_id }}</p>
-             <p>Recherche: {{ sortie.search }}</p>
-             <p>Date de début: {{ sortie.startDate|date('Y-m-d') }}</p>
-             <p>Date de fin: {{ sortie.endDate|date('Y-m-d') }}</p>
-             <p>Organisateur: {{ sortie.organizer ? 'Oui' : 'Non' }}</p>
-             <p>Inscrit: {{ sortie.registered ? 'Oui' : 'Non' }}</p>
-             <p>Non inscrit: {{ sortie.notRegistered ? 'Oui' : 'Non' }}</p>
-             <p>Événements passés: {{ sortie.pastEvent ? 'Oui' : 'Non' }}</p>
+             <p>Campus: {{ sortie.campus }}</p>
+             <p>Recherche: {{ sortie.nom }}</p>
+             <p>Date de début: {{ sortie.dateHeureDebut|date('Y-m-d') }}</p>
+             {%  if (sortie.participants.contains(app.user))%}
+                Inscrit
+             {% else  %}
+                 Non inscrit
+                 {# mettre lien inscrire #}
+             {% endif %}
+
+             {% if (sortie.organisateur==app.user) %}
+             oui je suis l'organisateur
+             {% else %}
+                 je ne suis pas l'oganisateur
+             {% endif %}
          {% endfor %}
 
 

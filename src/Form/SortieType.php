@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use App\Entity\Ville;
 use App\Entity\Campus;
 use App\Entity\Sortie;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,7 @@ class SortieType extends AbstractType
     {        
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de la sortie : '
+                'label' => 'Nom de la sortie : ',
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
@@ -42,13 +43,13 @@ class SortieType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('nbInscriptionMax', null, [
-                'label' => 'Nombre de places : '
+                'label' => 'Nombre de places : ',
             ])
             ->add('duree', null, [
-                'label' => 'Durée : '
+                'label' => 'Durée : ',
             ])
             ->add('infosSortie', TextareaType::class, [
-                'label' => 'Description & infos : '
+                'label' => 'Description & infos : ',
             ])
             ->add('campus', EntityType::class, [
                 'label' => 'Campus : ',
@@ -63,7 +64,11 @@ class SortieType extends AbstractType
                 'class' => Ville::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Sélectionnez une ville',
-                'mapped' => false, // Ne pas mapper ce champ à l'entité Sortie
+                'mapped' => false, // Ne pas mapper ce champ à l'entité Sortie,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nom', 'ASC');
+                }
             ])
             ->add('etat', HiddenType::class)
             ->add('organisateur', HiddenType::class)
@@ -78,13 +83,6 @@ class SortieType extends AbstractType
                 'attr' => [
                     'class' => 'publish'
                 ]
-
-            ])
-            ->add('annuler', SubmitType::class, [
-                'label' => 'Annuler',
-                'attr' => [
-                    'class' => 'cancel'
-                ]
             ]);
 
             $builder->get('ville')->addEventListener(
@@ -92,13 +90,13 @@ class SortieType extends AbstractType
                 function (FormEvent $event)
                 {
                     $form = $event->getForm();
-                    
+                    dd($form->getData()->getLieux());
                     $form->getParent()->add('lieu', EntityType::class, [
                         'label' => 'Lieu : ',
                         'class' => Lieu::class,
                         'choices' => $form->getData()->getLieux(),
                         'placeholder' => 'Sélectionnez un lieu',
-                        'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.'])
+                        'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.']),
                     ]);                    
                 }
             );
@@ -110,8 +108,6 @@ class SortieType extends AbstractType
                     $form = $event->getForm();
                     $data = $event->getData();
                     $lieu = $data->getLieu();
-                    // $ville = $form->get('ville');
-                    // dump($ville);
             
                     if ($lieu)
                     {
@@ -122,7 +118,7 @@ class SortieType extends AbstractType
                             'class' => Lieu::class,
                             'choices' => $lieu->getVille()->getLieux(),
                             'placeholder' => 'Sélectionnez un lieu',
-                            'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.'])
+                            'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.']),
                         ]);
                     } else {
                         $form->add('lieu', EntityType::class, [
@@ -130,7 +126,7 @@ class SortieType extends AbstractType
                             'class' => Lieu::class,
                             'choices' => [],
                             'placeholder' => 'Sélectionnez un lieu',
-                            'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.'])
+                            'constraints' => new NotBlank(['message' => 'Merci de choisir un lieu.']),
                         ]);
                     }
                     

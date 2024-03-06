@@ -7,4 +7,3 @@ import './bootstrap.js';
  */
 import './styles/normalize.css';
 import './styles/app.css';
-import './api/form.js';

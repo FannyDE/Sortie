@@ -26,37 +26,21 @@ class HomeController extends AbstractController
     {
         $user = $this->getUser();
         $isAdmin = $this->isGranted('ROLE_ADMIN');
-        $campusList = [];
 
-        $searchDTO = null;
 
-        if ($isAdmin || $user instanceof User) {
-            // Si l'utilisateur est un administrateur, récupérer la liste des campus
 
-            if ($isAdmin) {
-                $campusList = $this -> getDoctrine () -> getRepository ( Campus::class ) -> findAll();
-                $defaultCampus = !empty( $campusList ) ? $campusList[0] : null;
 
-                $searchDTO = new SearchDTO(
-                    $defaultCampus,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                );
-                $searchDTO -> setCampus ( $campusList );
-                $defaultCampus = null;
+            /*$campusEntities = $this->getDoctrine()->getRepository(Campus::class)->findAll();
+            $campusList = [];
 
-                } elseif (!$isAdmin && $user instanceof User) {
-                $defaultCampusId = $user -> getCampus ();
+            foreach ($campusEntities as $campus) {
+                // Pour chaque entité Campus récupérée, vous pouvez ajouter son nom à votre liste
+                $campusList[$campus->getNom()] = $campus->getId() ;
+            }*/
 
-                $defaultCampus = $this -> getDoctrine () -> getRepository ( Campus::class ) -> find ( $defaultCampusId );
-
-                // Créer le formulaire de recherche de sortie
-                $searchForm = $this -> createForm ( SearchSortieType::class, null, ['campus_choices' => $this->formatCampusChoices($campusList)]);
+            // Créer le formulaire de recherche de sortie
+            $searchDTO = new SearchDTO();
+            $searchForm = $this -> createForm ( SearchSortieType::class, $searchDTO);
 
                 $searchForm -> handleRequest ( $request );
 
@@ -64,17 +48,18 @@ class HomeController extends AbstractController
                 $resultats = null;
 
                 if ($searchForm -> isSubmitted () && $searchForm -> isValid ()) {
-                    // Construire un objet SearchDTO avec les données du formulaire
+
+                    /* Construire un objet SearchDTO avec les données du formulaire
                     $searchDTO = new SearchDTO(
-                        $searchForm -> get ( 'campus' ) -> getData (),
-                        $searchForm -> get ( 'search' ) -> getData (),
-                        $searchForm -> get ( 'startDate' ) -> getData (),
-                        $searchForm -> get ( 'endDate' ) -> getData (),
-                        $searchForm -> get ( 'organizer' ) -> getData (),
-                        $searchForm -> get ( 'registered' ) -> getData (),
-                        $searchForm -> get ( 'notRegistered' ) -> getData (),
-                        $searchForm -> get ( 'pastEvent' ) -> getData ()
-                    );
+                        $searchForm->get('campus')->getData(),
+                        $searchForm->get('search')->getData(),
+                        \DateTime::createFromFormat('Y-m-d', $searchForm->get('startDate')->getData()),
+                        \DateTime::createFromFormat('Y-m-d', $searchForm->get('endDate')->getData()),
+                        (bool) $searchForm->get('organizer')->getData(),
+                        (bool) $searchForm->get('registered')->getData(),
+                        (bool) $searchForm->get('notRegistered')->getData(),
+                        (bool) $searchForm->get('pastEvents')->getData()
+                    );*/
 
                     // Utiliser le SearchDTO pour effectuer une recherche en base de données
                     $repository = $this -> getDoctrine () -> getRepository ( Sortie::class );
@@ -96,7 +81,7 @@ class HomeController extends AbstractController
                     }
 
                     if ($searchDTO -> getEndDate ()) {
-                        $queryBuilder -> andWhere ( 's.dateFin <= :endDate' )
+                        $queryBuilder -> andWhere ( 's.dateHeureDebut <= :endDate' )
                             -> setParameter ( 'endDate', $searchDTO -> getEndDate () );
                     }
 
@@ -118,7 +103,7 @@ class HomeController extends AbstractController
                     }
 
 
-                    if ($searchDTO -> getPastEvent ()) {
+                    if ($searchDTO -> getPastEvents ()) {
                         $queryBuilder -> andWhere ( 's.dateFin < :now' )
                             -> setParameter ( 'now', new \DateTime() );
                     }
@@ -134,12 +119,11 @@ class HomeController extends AbstractController
                 return $this -> render ( 'home/index.html.twig', [
                     'user' => $user,
                     'isAdmin' => $isAdmin,
-                    'campusList' => $campusList,
                     'searchForm' => $searchForm -> createView (),
                     'resultats' => $resultats] );
 
-            }
-        } else {return $this -> redirectToRoute ( 'app_login');}
+
+
     }
 
     private ManagerRegistry $doctrine;
@@ -156,14 +140,6 @@ class HomeController extends AbstractController
         return $this->doctrine;
     }
 
-    private function formatCampusChoices(array $campusList): array
-    {
-        $choices = [];
-        foreach ($campusList as $campus) {
 
-            $choices[$campus->getId()] = $campus->getNom();
-        }
-        return $choices;
-    }
 }
 

@@ -16,6 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
+#[Route("/profil")]
 
 class EditController extends AbstractController
 {

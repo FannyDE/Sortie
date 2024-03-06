@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Nouveau lieu{% endblock %}
+
+{% block body %}
+    <div class="main_body">
+
+        <div class="formulaire_titre">
+            <h3>Créer un lieu</h3>
+        </div>
+        <div class="formulaire_sortie">
+            {{ form_start(lieuForm) }}
+            <div class="form_lieu_main">
+                {{ form_row(lieuForm.nom) }}
+                <br>
+                {{ form_row(lieuForm.rue) }}
+                <br>
+                {{ form_row(lieuForm.codePostal) }}
+                <br>
+                {{ form_row(lieuForm.latitude) }}
+                <br>
+                {{ form_row(lieuForm.longitude) }}
+                <br>
+                {{ form_row(lieuForm.ville) }}
+            </div>
+            <div class="partie_boutons">
+                {{ form_row(lieuForm.enregistrer) }}
+                <a href="{{ path('sortie_create') }}" class='cancel'>Annuler</a>
+            </div>
+            {{ form_end(lieuForm) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %} 
+    {{ parent() }}
+{% endblock %}

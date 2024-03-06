@@ -15,9 +15,19 @@ class SearchDTO
     private bool $organizer;
     private bool $registered;
     private bool $notRegistered;
-    private bool $pastEvent;
+    private bool $pastEvents;
 
-    public function __construct($campus, $search, $startDate, $endDate, $organizer, $registered, $notRegistered, $pastEvent)
+
+    /*public function __construct(
+        Campus $campus,
+        string $search,
+        DateTime $startDate,
+        DateTime $endDate,
+        bool $organizer,
+        bool $registered,
+        bool $notRegistered,
+        bool $pastEvents
+    )
     {
         $this->campus = $campus;
         $this->search = $search;
@@ -26,8 +36,8 @@ class SearchDTO
         $this->organizer = $organizer;
         $this->registered = $registered;
         $this->notRegistered = $notRegistered;
-        $this->pastEvent = $pastEvent;
-    }
+        $this->pastEvents = $pastEvents;
+    }*/
 
     public function getCampus(): Campus
     {
@@ -64,9 +74,9 @@ class SearchDTO
         return $this->notRegistered;
     }
 
-    public function getPastEvent(): bool
+    public function getPastEvents(): bool
     {
-        return $this->pastEvent;
+        return $this->pastEvents;
     }
 
     public function setCampus(Campus $campus): SearchDTO
@@ -75,4 +85,41 @@ class SearchDTO
 
         return $this;
     }
+
+    public function setSearch(string $search): void
+    {
+        $this -> search = $search;
+    }
+
+    public function setStartDate(DateTime $startDate): void
+    {
+        $this -> startDate = $startDate;
+    }
+
+    public function setEndDate(DateTime $endDate): void
+    {
+        $this -> endDate = $endDate;
+    }
+
+    public function setOrganizer(bool $organizer): void
+    {
+        $this -> organizer = $organizer;
+    }
+
+    public function setRegistered(bool $registered): void
+    {
+        $this -> registered = $registered;
+    }
+
+    public function setNotRegistered(bool $notRegistered): void
+    {
+        $this -> notRegistered = $notRegistered;
+    }
+
+    public function setPastEvents(bool $pastEvents): void
+    {
+        $this -> pastEvents = $pastEvents;
+    }
+
+
 }
