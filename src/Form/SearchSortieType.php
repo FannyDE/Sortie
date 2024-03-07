@@ -22,29 +22,34 @@ class SearchSortieType extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
+                'attr' => ['class' => 'custom-class'],
             'label' => 'Campus : ',
             'required' => false,
             'choice_label' => 'nom'
         ])
             ->add('search', TextType::class,
-            ['label' => 'Le nom de la sortie contient : '])
+            ['label' => 'Le nom de la sortie contient :','attr' => ['class' => 'custom-class']])
             ->add('startDate', DateType::class,
-            ['label' => 'Entre le : '])
+            ['label' => 'Entre le :','attr' => ['class' => 'custom-class']])
             ->add('endDate', DateType::class,
-            ['label' => 'Et le : '])
+            ['label' => 'Et le :','attr' => ['class' => 'custom-class']])
             ->add('organizer', CheckboxType::class,
             ['label' => 'Sortie dont je suis l\'organisateur/trice',
+                'attr' => ['class' => 'custom-class'],
                 'required' => false])
             ->add('registered', CheckboxType::class,
             ['label' => 'Sortie auxquelles je suis inscrit/e',
+                'attr' => ['class' => 'custom-class'],
                 'required' => false])
             ->add('notRegistered', CheckboxType::class,
             ['label' => 'Sortie auxquelles je ne suis pas inscrit/e',
+                'attr' => ['class' => 'custom-class'],
                 'required' => false])
             ->add('pastEvents', CheckboxType::class,
             ['label' => 'Sortie passées',
+                'attr' => ['class' => 'custom-class'],
                 'required' => false])
-            ->add('submit', SubmitType::class, ['label' => 'Recherche'])
+            ->add('submit', SubmitType::class, ['label' => 'Recherche','attr' => ['class' => 'custom-class']])
             ->getForm();
         ;
 

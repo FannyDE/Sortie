@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/profile.css') }}">
+{% endblock %}
 {% block title %}Accueil{% endblock%}
 
  {% block body %}
@@ -13,8 +15,11 @@
          {{ form_start(searchForm) }}
          {{ form_row(searchForm.campus) }}
          {{ form_row(searchForm.search) }}
-         {{ form_row(searchForm.startDate) }}
-         {{ form_row(searchForm.endDate) }}
+         <div>
+             {{ form_row(searchForm.startDate) }}
+             {{ form_row(searchForm.endDate) }}
+         </div>
+
          {{ form_row(searchForm.organizer) }}
          {{ form_row(searchForm.registered) }}
          {{ form_row(searchForm.notRegistered) }}

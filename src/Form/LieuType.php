@@ -18,22 +18,22 @@ class LieuType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Lieu : '
+                'label' => 'Lieu :'
             ])
             ->add('rue', TextType::class, [
-                'label' => 'Rue : '
+                'label' => 'Rue :'
             ])
             ->add('codePostal', TextType::class,[
-                'label' => 'Code postal : '
+                'label' => 'Code postal :'
             ])
             ->add('latitude', NumberType::class, [
-                'label' => 'Latitude : '
+                'label' => 'Latitude :'
             ])
             ->add('longitude', NumberType::class, [
-                'label' => 'Longitude : '
+                'label' => 'Longitude :'
             ])
             ->add('ville', EntityType::class, [
-                'label' => 'Ville : ',
+                'label' => 'Ville :',
                 'class' => Ville::class,
                 'choice_label' => 'nom',
             ])

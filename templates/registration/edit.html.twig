@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/profile.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/app.css') }}">
 {% endblock %}
 {% block body %}
+    <aside class="informations">
+        Largeur détectée : <strong id="largeur">500</strong> px
+        <br>
+        Orientation : <strong id="orientation"></strong>
+    </aside>
     <h1>Mon profil</h1>
 
     {{ form_errors(editForm) }}
