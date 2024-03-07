@@ -7,8 +7,12 @@ body {
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+
+}
+
+.form-control, .btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 label{
@@ -24,6 +28,7 @@ header {
 h3 {
     font-size: 2rem;
 }
+
 
 a {
     color: black;
@@ -220,6 +225,10 @@ select[readonly="readonly"] {
 
     h1{
         text-align: center;
+    }
+
+    .paragraphe{
+        font-size: 150%;
     }
 
     form {
