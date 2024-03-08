@@ -68,3 +68,17 @@ lieuSelect.addEventListener('change', function() {
     latitude.innerHTML = "";
     longitude.innerHTML = "";
 })
+
+
+if (lieuSelect.value !== null) {
+    fetch(`/Sortie/public/api/lieu/${lieuSelect.value}`, {
+        method: 'GET',
+        headers: { 'Accept' : 'application-json' }
+    }).then(response => response.json())
+    .then(data => {
+        rue.innerHTML = data[0].rue;
+        cp.innerHTML = data[0].codePostal;
+        latitude.innerHTML = data[0].latitude;
+        longitude.innerHTML = data[0].longitude;
+    });
+}

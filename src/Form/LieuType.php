@@ -11,6 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LieuType extends AbstractType
 {
@@ -18,24 +20,66 @@ class LieuType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Lieu :'
+                'label' => 'Lieu : ',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner le nom du lieu'
+                    ]),
+                    new Length([
+                        'max' => 255
+                    ])
+                ]
             ])
             ->add('rue', TextType::class, [
-                'label' => 'Rue :'
+                'label' => 'Rue : ',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner la rue du lieu'
+                    ]),
+                    new Length([
+                        'max' => 255
+                    ])
+                ]
             ])
             ->add('codePostal', TextType::class,[
-                'label' => 'Code postal :'
+                'label' => 'Code postal : ',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner le code postal du lieu'
+                    ]),
+                    new Length([
+                        'min' => 5,
+                        'max' => 5,
+                        'exactMessage' => 'Le code postal doit être composé de {{ limit }} caractères'
+                    ])
+                ]
             ])
             ->add('latitude', NumberType::class, [
-                'label' => 'Latitude :'
+                'label' => 'Latitude : ',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner la latitude du lieu'
+                    ]),
+                    new Length([
+                        'max' => 255
+                    ])
+                ]
             ])
             ->add('longitude', NumberType::class, [
-                'label' => 'Longitude :'
+                'label' => 'Longitude : ',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner la longitude du lieu'
+                    ]),
+                    new Length([
+                        'max' => 255
+                    ])
+                ]
             ])
             ->add('ville', EntityType::class, [
                 'label' => 'Ville :',
                 'class' => Ville::class,
-                'choice_label' => 'nom',
+                'choice_label' => 'nom'
             ])
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Enregistrer',

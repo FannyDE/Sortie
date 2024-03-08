@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -17,21 +18,31 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner le nom de la sortie')]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un jour et une heure')]
+    #[Assert\GreaterThan('now')]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
-    #[ORM\Column]
-    private ?int $duree = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner une date limite d\'inscription')]
+    #[Assert\GreaterThanOrEqual('today')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
+    #[Assert\NotBlank(message: 'Veuillez renseigner le nombre de participants maximum pour la sortie')]
     private ?int $nbInscriptionMax = null;
+    
+    #[ORM\Column]
+    #[Assert\Positive]
+    #[Assert\NotBlank(message: 'Veuillez renseigner la durée de la sortie')]
+    private ?int $duree = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(max: 4096, maxMessage: 'La limite est de {{ limit }} caractères.')]
     private ?string $infosSortie = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
@@ -52,6 +63,10 @@ class Sortie
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'sortiesParticipees')]
     private Collection $participants;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(max: 4096, maxMessage: 'La limite est de {{ limit }} caractères.')]
+    private ?string $motifAnnulation = null;
 
     public function __construct()
     {
@@ -203,6 +218,18 @@ class Sortie
     public function removeParticipant(User $participant): static
     {
         $this->participants->removeElement($participant);
+
+        return $this;
+    }
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+
+    public function setMotifAnnulation(?string $motifAnnulation): static
+    {
+        $this->motifAnnulation = $motifAnnulation;
 
         return $this;
     }

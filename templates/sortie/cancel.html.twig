@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Modifier sortie{% endblock %}
+
+{% block body %}
+
+    <div class="main_body">
+
+        <div class="formulaire_titre">
+            <h3>Supprimer une sortie</h3> {# Remplacement du terme "Annuler" par "Supprimer" pour conserver la cohérence #}
+        </div>
+        <div class="formulaire_sortie">
+            {{ form_start(sortieForm) }}
+            <div class="form_sortie_main">
+                <div>
+                    <div>Nom de la sortie : {{ sortie.nom }}</div>
+                    <br>
+                    <div>Date de la sortie : {{ sortie.dateHeureDebut|date('d/m/Y') }}</div>
+                    <br>
+                    <div>Campus : {{ sortie.campus }}</div>
+                    <br>
+                    <div>Lieu : {{sortie.lieu}}, {{sortie.lieu.rue}}, {{sortie.lieu.codePostal}} {{sortie.lieu.getVille()}}</div>
+                    <br>
+                    <div class="description_container">
+                        {{ form_row(sortieForm.motifAnnulation) }}
+                    </div>
+                    <br>
+                </div>
+                {{ form_row(sortieForm.etat, {'id': 'sortie_etat'}) }}  
+            </div>
+            <div class="partie_boutons">
+                {{ form_row(sortieForm.enregistrer, {'id': 'sortie_enregistrer'}) }}
+                <a href="{{ path('home') }}" class='cancel'>Annuler</a>
+            </div>
+            {{ form_end(sortieForm, {'render_rest': false}) }}
+        </div>
+
+        
+    </div>
+
+{% endblock %}
+
+{% block javascripts %} 
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts2 %}
+    <script src="{{ asset('api/form.js') }}"></script>
+{% endblock %}

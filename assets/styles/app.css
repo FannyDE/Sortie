@@ -150,7 +150,6 @@ main {
 
         &:hover {
             cursor: pointer;
-            color: purple;
         }
     }
 
@@ -158,17 +157,26 @@ main {
 
 .save:hover {
     background-color: rgb(114, 197, 249);
+    color: black;
 }
 
 .publish:hover {
     background-color: rgb(138, 221, 138);
+    color: black;
 }
 
 .cancel:hover {
     background-color: rgb(210, 130, 130);
+    color: black;
 }
 
-select[readonly="readonly"] {
+.delete:hover {
+    background-color: black;
+    color: white
+}
+
+select[readonly="readonly"],
+input[readonly="readonly"] {
     appearance: none;
     background-color: lightgray;
     color: black;

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Nouvelle sortie{% endblock %}
+{% block title %}{{ parent() }} | Modifier sortie{% endblock %}
 
 {% block body %}
 
     <div class="main_body">
 
         <div class="formulaire_titre">
-            <h3>Créer une sortie</h3>
+            <h3>Modifier une sortie</h3>
         </div>
         <div class="formulaire_sortie">
             {{ form_start(sortieForm) }}
@@ -56,11 +56,17 @@
             <div class="partie_boutons">
                 {{ form_row(sortieForm.enregistrer, {'id': 'sortie_enregistrer'}) }}
                 {{ form_row(sortieForm.publier, {'id': 'sortie_publier'}) }}
+                {{ form_row(sortieForm.supprimer, {'id': 'sortie_supprimer'}) }}
+                {# <form action="{{ path('sortie_delete', { 'id': sortie.id }) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="delete">Supprimer la sortie</button>
+                </form> #}
+                {# <a href="{{ path('sortie_delete', {'id': sortie.id}) }}" class='delete'>Supprimer la sortie</a> #}
                 <a href="{{ path('home') }}" class='cancel'>Annuler</a>
             </div>
             {{ form_end(sortieForm, {'render_rest': false}) }}
         </div>
-
+    
         
     </div>
 

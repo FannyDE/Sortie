@@ -6,6 +6,7 @@ use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
@@ -19,18 +20,38 @@ class Lieu
 
     #[ORM\Column(length: 255)]
     #[Groups(['liste_lieux'])]
+    #[Assert\NotBlank(message: 'Veuillez renseigner le nom du lieu')]
+    #[Assert\Length(max: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner la rue du lieu')]
+    #[Assert\Length(max: 255)]
     private ?string $rue = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner le code postal du lieu')]
+    #[Assert\Length(exactly: 5,
+                    exactMessage: 'Le code postal doit être composé de {{ limit }} caractères')]
+    #[Assert\Regex(
+                pattern: '#^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$#',
+                message: 'Le code postal français doit respecter la forme : "DDDDD" où les "D" sont des chiffres, et dont les deux premiers chiffres vont de 01 à 98')]
     private ?string $codePostal = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Veuillez renseigner la latitude du lieu')]
+    #[Assert\Length(max: 255)]
+    #[Assert\Regex(
+        pattern: '#^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$#',
+        message: 'La latitude renseignée ne respecte pas le format attendu. Elle doit être comprise en -90 et 90.')]
     private ?float $latitude = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Veuillez renseigner la longitude du lieu')]
+    #[Assert\Length(max: 255)]
+    #[Assert\Regex(
+        pattern: '#^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$#',
+        message: 'La longitude renseignée ne respecte pas le format attendu. Elle doit être comprise en -180 et 180.')]
     private ?float $longitude = null;
 
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'lieu')]
@@ -151,5 +172,10 @@ class Lieu
         $this->ville = $ville;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 }
