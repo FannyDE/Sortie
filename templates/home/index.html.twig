@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/profile.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/app.css') }}">
 {% endblock %}
 {% block title %}Accueil{% endblock%}
 
@@ -26,30 +27,57 @@
          {{ form_row(searchForm.pastEvents) }}
          {{ form_end(searchForm) }}
 
-
-
-         {% for sortie in resultats %}
-             <p>Campus: {{ sortie.campus }}</p>
-             <p>Recherche: {{ sortie.nom }}</p>
-             <p>Date de début: {{ sortie.dateHeureDebut|date('Y-m-d') }}</p>
-             {%  if (sortie.participants.contains(app.user))%}
-                Inscrit
-             {% else  %}
-                 Non inscrit
-                 {# mettre lien inscrire #}
-             {% endif %}
-
-             {% if (sortie.organisateur==app.user) %}
-             oui je suis l'organisateur
-             {% else %}
-                 je ne suis pas l'oganisateur
-             {% endif %}
-         {% endfor %}
-
-
-
      </section>
 
+     <section>
+         <table class="table">
+         <thead>
+             <tr>
+                 <th>Campus</th>
+                 <th>Recherche</th>
+                 <th>Date de début</th>
+                 <th>Clôture des inscription</th>
+                 <th>Inscrit</th>
+                 <th>Places restantes</th>
+                 <th>Etat</th>
+                 <th>Statut d'inscription</th>
+                 <th>Organisateur</th>
+             </tr>
+         </thead>
+
+        <tbody>
+         {% for sortie in resultats %}
+             <br>
+             <tr>
+                 <td>{{ sortie.campus }}</td>
+                 <td>{{ sortie.nom }}</td>
+                 <td>{{ sortie.dateHeureDebut|date('Y-m-d') }}</td>
+                 <td>{{ sortie.dateLimiteInscription|date('Y-m-d') }}</td>
+                 <td>{{ sortie.participants.count() }}</td>
+                 <td>{{ sortie.nbInscriptionMax }}</td>
+                 <td>{{ sortie.etat.libelle }}</td>
+                 <td>
+                     {% if sortie.participants.contains(app.user) %}
+                         Inscrit
+                     {% else %}
+                         Non inscrit
+                         <a href="{{ path('inscription_sortie', {'id': sortie.id}) }}">Inscrire</a>
+                     {% endif %}
+                 </td>
+                 <td>
+                     {% if sortie.organisateur == app.user %}
+                         Oui, je suis l'organisateur
+                     {% else %}
+                         Je ne suis pas l'organisateur
+                     {% endif %}
+                 </td>
+             </tr>
+         {% endfor %}
+         </tbody>
+         </table>
+     </section>
+
+<br>
   <a href={{ path('sortie_create') }} class="button">Créer une activité</a>
 
 {% endblock %}

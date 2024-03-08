@@ -61,10 +61,8 @@ class SearchSortieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SearchDTO::class,
-            'campus_choices' => [],
+            'method' =>'GET',
 
         ]);
-
-        $resolver->setAllowedTypes('campus_choices', 'array');
     }
 }

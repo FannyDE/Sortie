@@ -104,7 +104,7 @@ class HomeController extends AbstractController
 
 
                     if ($searchDTO -> getPastEvents ()) {
-                        $queryBuilder -> andWhere ( 's.dateFin < :now' )
+                        $queryBuilder -> andWhere ( 's.dateHeureDebut < :now' )
                             -> setParameter ( 'now', new \DateTime() );
                     }
 
@@ -113,6 +113,8 @@ class HomeController extends AbstractController
 
                     // Exécuter la requête et récupérer les résultats
                     $resultats = $queryBuilder -> getQuery () -> getResult ();
+                    //dd($resultats);
+
                 }
 
                 // Rendre la vue avec les données nécessaires
@@ -120,7 +122,7 @@ class HomeController extends AbstractController
                     'user' => $user,
                     'isAdmin' => $isAdmin,
                     'searchForm' => $searchForm -> createView (),
-                    'resultats' => $resultats] );
+                    'resultats' => $resultats ]);
 
 
 
