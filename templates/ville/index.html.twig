@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Villes{% endblock %}
+
+{% block body %}
+    <div class="main_body">
+
+        <div class="formulaire_titre">
+            <h3>Liste des villes</h3>
+        </div>
+        <div>
+            {% for ville in villes %}
+                <ul>{{ville.nom}}</ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -2,26 +2,52 @@
 
 namespace App\Controller;
 
+use App\Entity\Ville;
 use App\Form\VilleType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/ville', name: 'ville_', methods: ['GET', 'POST'])]
 class VilleController extends AbstractController
 {
-    #[Route('/ville', name: 'app_ville', methods: ['GET', 'POST'])]
-    public function index(Request $request): Response
+    #[Route('/', name: 'list', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
-        $formVille = $this->createForm(VilleType::class);
-        $formVille->handleRequest($request);
-
-        if ($formVille->isSubmitted() && $formVille->isValid()) {
-            // handle form submission
-        }
+        $villes = $em->getRepository(Ville::class)->findAll();
 
         return $this->render('ville/index.html.twig', [
-            'formVille' => $formVille->createView(),
+            'villes' => $villes
+        ]);
+    }
+
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+    public function create(Request $request, EntityManagerInterface $em): Response
+    {
+        $ville = new Ville();
+        $villeForm = $this->createForm(VilleType::class);
+        
+        $villeForm->handleRequest($request);
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $ville = $villeForm->getData();
+
+            $messageFlash = 'Ville enregistrée !';
+                
+            // Enregistrer l'entité en base de données
+            $em->persist($ville);
+            $em->flush();
+
+            
+            // Afficher message flash
+            $this->addFlash('success', $messageFlash);
+            // Rediriger vers une autre page
+            return $this->redirectToRoute('sortie_create');
+        }
+
+        return $this->render('ville/create.html.twig', [
+            'villeForm' => $villeForm
         ]);
     }
 }

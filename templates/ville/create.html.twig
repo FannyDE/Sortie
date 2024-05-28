@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Nouvelle ville{% endblock %}
+
+{% block body %}
+    <div class="main_body">
+
+        <div class="formulaire_titre">
+            <h3>Créer une ville</h3>
+        </div>
+        <div class="formulaire_sortie">
+            {{ form_start(villeForm) }}
+            <div class="form_lieu_main">
+                {{ form_row(lieuForm.nom) }}
+            </div>
+            <div class="partie_boutons">
+                {{ form_row(villeForm.enregistrer) }}
+                <a href="{{ path('sortie_create') }}" class='cancel'>Annuler</a>
+            </div>
+            {{ form_end(villeForm) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %} 
+    {{ parent() }}
+{% endblock %}
